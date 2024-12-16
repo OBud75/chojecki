@@ -3,7 +3,7 @@
 Password::Password(const std::string &password, bool is_encrypted) {
     if (!is_encrypted) {
         if (!is_valid(password)) {
-		std::cout << "MDP 6 caracteres" << std::endl;
+		std::cout << "le mot de passe doit contenir au moins 6 caracteres, une majuscule et un caractere special" << std::endl;
         }
         raw_value = password;
         encrypt();
@@ -15,11 +15,22 @@ Password::Password(const std::string &password, bool is_encrypted) {
 bool Password::is_valid(const std::string &password) const {
     if (password.length() < 6) {
         return false;
+    }
+    if (!std::regex_search(password, std::regex("[A-Z]"))) {
+        return false;
+    }
+    if (!std::regex_search(password, std::regex("[!@#$%^&*(),.?\":{}|<>]"))) {
+        return false;
+    }
     return true;
 }
 
+std::string Password::encrypt(std::string str) {
+    return "ENC(" + str + ")";
+}
+
 void Password::encrypt() {
-    encrypted_value = "ENC(" + raw_value + ")";
+    encrypted_value = encrypt(raw_value);
 }
 
 std::string Password::str() const {

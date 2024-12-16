@@ -1,6 +1,6 @@
 ;assembleur, ce programme demande le prenom avant de lafficher
 section .data
-  input_msg db "Quel est votre prénom ?", 0xA    
+  input_msg db "Quel est ton prénom ?", 0xA    
   input_msg_len equ $ - input_msg 
   msg db "Bonjour "
   msg_len equ $ - msg 
@@ -19,7 +19,7 @@ _start:
   mov rdx, input_msg_len
   syscall
 
-  ; read input t
+  ; read input term
   mov rax, 0 ; Syscall sys_read 
   mov rdi, 0              
   lea rsi, [buffer]       
@@ -33,14 +33,13 @@ _start:
   mov rdx, msg_len
   syscall
 
-  ; read input 
+  ; write input term
   mov rax, 1; Syscall sys_write 
   mov rdi, 1              
   lea rsi, [buffer]       
   mov rdx, 128
   syscall ; syscall
 
-  ; quit
   mov rax, 60 ; Syscall
   mov rdi, 0           	  
   syscall                 
