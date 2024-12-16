@@ -46,8 +46,7 @@ bool User::id_exists(int id_value) {
 }
 
 void User::save() {
-  // In a file (or DB)
-  // id|password (hashed) 
+
 
   if (!id_exists(this->id)) {
 	  std::string content = std::to_string(this->id) + "|" + password.str() + "\n";
@@ -55,7 +54,7 @@ void User::save() {
 	  file << content;
 	  std::cout << "Saved: " << content << std::endl;
   }
-  printf("une sauvegarde existe deja");
+  printf("User deja enregistre");
 }
 
 std::string get_hashed_password(std::string raw_password) {
@@ -66,15 +65,16 @@ int User::login(std::string raw_password) {
   std::string encrypted = get_hashed_password(raw_password);
   if (encrypted==this->password.str()) {
 	  is_logged_in = true; 
-	  printf("User `%d` logge", this->id);
+	  printf("User `%d` logged in!\n", this->id);
   }
   else {
-  	printf("erreur de mot de passe");
+  	printf("mot de passe incorrect \n");
   }
   return 0;
 }
 
-std::unique_ptr<User> User::get(int id, Password pwd) {
+User* User::get(int id, Password pwd) {
+
 	if (id_exists(id)) {
 		std::string content = std::to_string(id) + "|" + pwd.str();
 
@@ -83,7 +83,7 @@ std::unique_ptr<User> User::get(int id, Password pwd) {
 		std::string line;
 		while (std::getline(file, line)) {
 			if (line==content) {
-				return std::make_unique<User>(-1, pwd);
+				return new User(id, pwd);
 			}
 		}
 		file.close();
@@ -91,7 +91,7 @@ std::unique_ptr<User> User::get(int id, Password pwd) {
 			std::cerr << "impossible douvrir le fichier" << std::endl;
 		}
 	} 
-	printf("utilisateur inexistant");
+	printf("user inexistant .\n");
 	return nullptr;
 }
 
@@ -108,7 +108,7 @@ std::string User::str() {
 }
 
 std::ostream &operator<<(std::ostream &os, const User &user) {
-    os << "id:"<< user.id << " est logge " << user.is_logged_in;
+    os << "id:"<< user.id << " est logge :" << user.is_logged_in;
     return os;
 }
 

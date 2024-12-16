@@ -1,9 +1,11 @@
 #include "password.hpp"
+#include <functional> 
+
 
 Password::Password(const std::string &password, bool is_encrypted) {
     if (!is_encrypted) {
         if (!is_valid(password)) {
-		std::cout << "le mot de passe doit contenir au moins 6 caracteres, une majuscule et un caractere special" << std::endl;
+		std::cout << "Le mot de passe doit contenir au moins 6 caracteres dont une majuscule et un caractere special." << std::endl;
         }
         raw_value = password;
         encrypt();
@@ -26,10 +28,13 @@ bool Password::is_valid(const std::string &password) const {
 }
 
 std::string Password::encrypt(std::string str) {
-    return "ENC(" + str + ")";
+    std::hash<std::string> hasher;
+    std::size_t hashed_value = hasher(str); 
+    return std::to_string(hashed_value);
 }
 
 void Password::encrypt() {
+    
     encrypted_value = encrypt(raw_value);
 }
 

@@ -24,6 +24,6 @@ class User {
 	
         void save();
         int login(std::string raw_password);
-        static std::unique_ptr<User> get(int id, Password pwd);
+        static User* get(int id, Password pwd);
         friend std::ostream &operator<<(std::ostream &os, const User &user);
 };
