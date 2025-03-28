@@ -154,6 +154,21 @@ int main() {
     while (1) {
         printf("z: haut, q: gauche, s: bas, d: droite, x: quitter");
         scanf(" %c", &input);
+        // scanf ne vide pas le buffer d'entrée comme std::endl par exemple
+        // il faudrait ici utiliser quelque chose comme
+        // int ch;
+        // while ((ch = getchar()) != '\n' && ch != EOF)
+        //      continue;
+        // Possibilité aussi d'utiliser fgetchar ou fgetstring
+        // char input;
+        // input = fgetc(stdin);
+        // Cela lit uniquement le 1er caractère et donc ne vide pas non plus
+        // le buffer (même chose que précédement)
+
+        // fgets lui lit tout le buffer d'entrée et donc le vide au passage
+        // char buffer[10];
+        // if (fgets(buffer, sizeof(buffer), stdin)) {input = buffer[0];}
+
 
         if (input == 'x') {
             printf("Quitter \n");

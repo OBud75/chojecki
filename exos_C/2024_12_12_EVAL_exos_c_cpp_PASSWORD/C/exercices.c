@@ -28,6 +28,8 @@ int is_greater(void *a, void *b) {
     return ((Person *)a)->age > ((Person *)b)->age;
 }
 
+// On peut penser à une fonction de comparaison qui renvoie 1 si obj1 > obj2, -1 si obj1 < obj2 et 0 si égaux
+
 int is_in_array(void *element, void *array, size_t num_elements, size_t element_size, int (*equals)(void *, void *)) {
     for (size_t i = 0; i < num_elements; i++) {
         if (equals(element, (char *)array + i * element_size)) {
@@ -35,6 +37,11 @@ int is_in_array(void *element, void *array, size_t num_elements, size_t element_
         }
     }
     return 0;
+    // On peut itérer directement sur les objets via leurs pointeurs, un peu comme on ferait en JS foreach ou en Python for obj in objs
+    // for (char *ptr = array; ptr < (char *)array + num_elements * element_size; ptr += element_size) {
+    //   if (equals(element, ptr)) {
+    //     return 1;
+    //   }
 }
 
 void sort(void *array, size_t num_elements, size_t element_size, int (*compare)(void *, void *), void (*swap_func)(void *, void *, size_t)) {
