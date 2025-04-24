@@ -44,3 +44,4 @@ _start:
   mov rdi, 0            
   syscall                 
 
+; Vous pouvez séparer les différentes paties en petites fonctions
